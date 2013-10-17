@@ -51,14 +51,14 @@ d3.json('data/data.json', function(graph) {
                             .links(graph.links)
                             .start();
               
-                        var tooltip = d3.select("body")
+        var tooltip = d3.select("body")
                             .append("foreignObject")
                             .append("xhtml:div")
                             .attr("id", "tooltip")
                             .style("position", "absolute")
                             .style("z-index", "10")
                             .style("color", "#eeeeee")
-                            .style("visibility", "hidden")
+                            //.style("visibility", "hidden")
                             .text("");
 
         var link = container.append("g")
