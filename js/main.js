@@ -14,6 +14,26 @@ var color = d3.scale.category20();
 
 d3.json('data/data.json', function(graph) {
 
+
+
+        var tooltip = {
+            element: null,
+            init: function() {
+                this.element = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0)
+            },
+            show: function(t) {
+                this.element.html(t).transition().duration(200).style("left", d3.event.pageX + 20 + "px").style("top", d3.event.pageY + "px").style("opacity", .9)
+            },
+            move: function() {
+                this.element.transition().duration(100).ease("linear").style("left", d3.event.pageX + 20 + "px").style("top", d3.event.pageY + "px").style("opacity", .9)
+            },
+            hide: function() {
+                this.element.transition().duration(500).style("opacity", 0)
+            }
+        };
+        tooltip.init();
+
+
         var force = d3.layout.force()
                     .charge(-200)
                     .linkDistance(50)
@@ -50,7 +70,8 @@ d3.json('data/data.json', function(graph) {
         force.nodes(graph.nodes)
                             .links(graph.links)
                             .start();
-              
+        
+        /*      
         var tooltip = d3.select("body")
                             .append("foreignObject")
                             .append("xhtml:div")
@@ -60,6 +81,7 @@ d3.json('data/data.json', function(graph) {
                             .style("color", "#eeeeee")
                             //.style("visibility", "hidden")
                             .text("");
+        */                    
 
         var link = container.append("g")
                                 .attr("class", "links")
@@ -122,8 +144,24 @@ d3.json('data/data.json', function(graph) {
                                 d3.select(this).select("circle").transition()
                                         .duration(750)
                                         .attr("r", (d.weight * 2+ 12)*1.5);
+
+                                tooltip.show(function (){
+                                    if (d.hasURL) {
+                                        return d.hasURL;
+                                    }
+                                    else {
+                                        return d.name;
+                                    };
+
+                                });          
         });
-        		
+        
+        node.on("mousemove", function(d){
+                                tooltip.move(); 
+
+
+        });
+
         node.on("mouseout", function(d){
                                 
                                 node.classed("node-active", false);
@@ -132,6 +170,8 @@ d3.json('data/data.json', function(graph) {
                                 d3.select(this).select("circle").transition()
                                         .duration(750)
                                         .attr("r", d.weight * 2+ 12);
+
+                                tooltip.hide();        
         });
 
 

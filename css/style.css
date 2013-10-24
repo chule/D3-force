@@ -1,4 +1,4 @@
-    .node {
+.node {
   stroke: #fff;
   stroke-width: 1.5px;
 }
@@ -26,4 +26,23 @@
     border: 2px #555 dashed;
     width:900px;
     height:600px;
+}
+
+.nodetext, .tooltip {
+    pointer-events: none;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: left;
+    width: 50px;
+    height: 15px;
+    padding: 2px;
+    padding-left: 6px;
+    font: 12px sans-serif;
+  /*  background: #000; */
+    border: 0px;
+    border-radius: 4px;
+    pointer-events: none;
+    color: #000;
 }
