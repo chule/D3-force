@@ -15,7 +15,7 @@ var color = d3.scale.category20();
 d3.json('data/data.json', function(graph) {
 
 
-
+        // tooltip stuff
         var tooltip = {
             element: null,
             init: function() {
